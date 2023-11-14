@@ -5,6 +5,7 @@ var timeDisplayEl = $("#time-display");
 var now;
 
 // Function to handle displaying the current time
+// this code was from the project tracker solved example
 function displayTime() {
   // Get the current time in the format "H A" (e.g., "2 PM")
   now = dayjs().format("H A");
@@ -19,7 +20,7 @@ function displayTime() {
 // Set up an interval to call the 'displayTime' function every second (1000 milliseconds)
 setInterval(displayTime, 1000);
 
-// Define an array of objects representing the work day schedule
+// an array that is representing the work day schedule
 var planWorkday = [
   { time: "9 AM", event: "" },
   { time: "10 AM", event: "" },
@@ -41,7 +42,7 @@ workDay.forEach(function (timeBlock, index) {
   var timeLabel = timeBlock.time;
   var blockColor = colorRow(timeLabel); // Get the color for the time block
 
-  // Construct an HTML string representing a time block with its associated elements
+  // This code creates the rows with the time in it. the code to create the divs were taken bootstrap
   var row =
     '<div class="time-block" id="' +
     index +
