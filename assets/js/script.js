@@ -6,20 +6,20 @@ var now;
 
 // Function to handle displaying the current time
 function displayTime() {
-  // Gets the current time in the format "H A" (e.g., "2 PM")
+  // Get the current time in the format "H A" (e.g., "2 PM")
   now = dayjs().format("H A");
 
-  // Gets the current date and time 
+  // Get the current date and time in a formatted string
   var rightNow = dayjs().format("DD MMM YYYY [at] hh:mm:ss a");
 
-  // Sets the text content of the 'timeDisplayEl' element to the formatted date and time
+  // Set the text content of the 'timeDisplayEl' element to the formatted date and time
   timeDisplayEl.text(rightNow);
 }
 
 // Set up an interval to call the 'displayTime' function every second (1000 milliseconds)
 setInterval(displayTime, 1000);
 
-// This is a array which is representing the work day schedule
+// Define an array of objects representing the work day schedule
 var planWorkday = [
   { time: "9 AM", event: "" },
   { time: "10 AM", event: "" },
@@ -32,7 +32,7 @@ var planWorkday = [
   { time: "5 PM", event: "" },
 ];
 
-// Retrieves the 'workDay' array from local storage or use the default 'planWorkday' if not available
+// Retrieve the 'workDay' array from local storage or use the default 'planWorkday' if not available
 var workDay = JSON.parse(localStorage.getItem("workDay")) || planWorkday;
 
 // Iterate over each element in the 'workDay' array and perform the following actions
@@ -53,17 +53,17 @@ workDay.forEach(function (timeBlock, index) {
     timeBlock.event +
     '</textarea><div class="col-sm col-lg-1 input-group-append"><button class="saveBtn btn-block" type="submit"><i class="fas fa-save"></i></button></div></div></div>';
 
-  // Add the row to the container element with the class 'container'
+  // Add the constructed row to the container element with the class 'container'
   $(".container").append(row);
 });
 
-// This is a Function to determine the color of a time block based on its relation to the current time
+// Function to determine the color of a time block based on its relation to the current time
 function colorRow(time) {
   // Get the current time and the time of the current time block
   var planNow = dayjs(now, "H A");
   var planEntry = dayjs(time, "H A");
 
-  // This is to determine and return the appropriate class based on the relationship between the times
+  // Determine and return the appropriate class based on the relationship between the times
   if (planNow.isBefore(planEntry)) {
     return "future";
   } else if (planNow.isAfter(planEntry)) {
@@ -72,3 +72,20 @@ function colorRow(time) {
     return "present";
   }
 }
+// this saves the event when the save button is pressed
+$(".container").on("click", ".saveBtn", function () {
+  // This gets the block ID from the closest time-block
+  var blockID = parseInt($(this).closest(".time-block").attr("id"));
+
+  // this gets the user's entry from the text area
+  var userEntry = $.trim($(this).closest(".time-block").find("textarea").val());
+
+  // then it updates the planWorkday array with the user's entry
+  workDay[blockID].event = userEntry;
+
+  // Sets local storage
+  localStorage.setItem("workDay", JSON.stringify(workDay));
+
+  // Re-render time blocks
+  renderTimeBlocks();
+});
