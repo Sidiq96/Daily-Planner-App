@@ -52,6 +52,8 @@ This website is a quiz which the user can answer a series of questions and also 
 *[W3 School](https://www.w3schools.com/js/default.asp)
 *[code academy](https://www.codecademy.com/learn)
 *[mozilla developer](https://developer.mozilla.org/en-US/docs/Web/JavaScript) 
+*[Bootstrap](https://getbootstrap.com/docs/4.0/components/forms/) 
+*[Jquery](https://jquery.com)
 
 # License
 
